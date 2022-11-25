@@ -6,6 +6,13 @@ const User = mongoose.model(
     username: String,
     email: String,
     password: String,
+    todos: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Todo",
+          index: true
+        }
+      ]
   })
 );
 

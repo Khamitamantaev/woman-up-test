@@ -7,8 +7,8 @@ const Todo = mongoose.model(
         },
         done: {
             type: Boolean,
-        },
-    })
+        }
+    }, { timestamps: true})
 );
 
 

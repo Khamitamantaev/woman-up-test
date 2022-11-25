@@ -19,7 +19,7 @@ const User = db.user;
 db.mongoose
   .connect(dbConfig.MONGODB_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
@@ -38,6 +38,7 @@ db.mongoose
                 username: INIT_USER.USER_NAME,
                 email: INIT_USER.EMAIL,             
                 password: bcrypt.hashSync(INIT_USER.PASSWORD, 8),
+                todos: []
             }).save(error => {
                 if(error) {
                     console.log("error: ", error);
@@ -55,6 +56,7 @@ app.get("/", (req, res) => {
 // routes
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+require('./routes/todo.routes')(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
