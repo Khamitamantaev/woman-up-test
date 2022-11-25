@@ -22,12 +22,12 @@ class TodoService {
 
   async findAll(id) {
     const { todos } =  await User.findById(id).populate("todos");
-    console.log(todos)
     return todos
   }
 
-  findById(id) {
-    return this.model.findById(id);
+  async findById(id, userId) {
+    const { todos } =  await User.findById(userId).populate("todos");
+    return todos[todos.findIndex(todo => todo._id == id)]
   }
 
  async deleteById(id, userId) {
@@ -35,9 +35,9 @@ class TodoService {
     return this.model.findByIdAndDelete(id);
   }
 
-  updateById(id, object) {
+  async updateById(id, object) {
     const query = { _id: id };
-    return this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done } });
+    return this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done } }, { new: true});
   }
 }
 

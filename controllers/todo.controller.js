@@ -23,12 +23,20 @@ exports.findAll = async (req, res) => {
     }).catch((error) => console.log(error));
 };
 
-exports.findOne = (req, res) => {
-
+exports.findOne = async (req, res) => {
+    const token = req.headers.authorization.substring(7, req.headers.authorization.length);
+    const decoded = jwt.verify(token, authConfig.access_secret);
+    let userId = decoded.id
+    return await todoService.findById(req.params.id, userId).then((todo) => {
+        res.status(200).json(todo);
+    }).catch((error) => console.log(error));
 };
 
-exports.update = (req, res) => {
-
+exports.update = async (req, res) => {
+    const object = req.body
+    return await todoService.updateById(req.params.id, object).then((todo) => {
+        res.status(200).json(todo);
+    }).catch((error) => console.log(error));
 };
 
 exports.delete = async (req, res) => {
@@ -41,12 +49,4 @@ exports.delete = async (req, res) => {
             deleted: id
         });
     }).catch((error) => console.log(error));
-};
-
-exports.deleteAll = (req, res) => {
-
-};
-
-exports.findAllPublished = (req, res) => {
-
 };
