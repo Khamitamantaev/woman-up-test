@@ -1,12 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-
+const bcrypt = require("bcryptjs");
 const app = express();
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 const dbConfig = require('./config/mongodb.config')
-var corsOptions = {
+const corsOptions = {
   origin: "http://localhost:8081"
 };
 
@@ -35,9 +35,9 @@ db.mongoose
     User.estimatedDocumentCount((err, count) => {
         if (!err && count === 0) {
             new User({
-                email: INIT_USER.EMAIL,
-                password: INIT_USER.PASSWORD,
-                username: INIT_USER.USER_NAME
+                username: INIT_USER.USER_NAME,
+                email: INIT_USER.EMAIL,             
+                password: bcrypt.hashSync(INIT_USER.PASSWORD, 8),
             }).save(error => {
                 if(error) {
                     console.log("error: ", error);
@@ -51,6 +51,10 @@ db.mongoose
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to WomanUp application." });
 });
+
+// routes
+require('./routes/auth.routes')(app);
+require('./routes/user.routes')(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
