@@ -1,0 +1,26 @@
+{
+  "name": "woman-up-test",
+  "version": "1.0.0",
+  "description": "This app for test WomanUp",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Khamitamantaev/woman-up-test.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "auth",
+    "todolist"
+  ],
+  "author": "khamitamantaev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Khamitamantaev/woman-up-test/issues"
+  },
+  "homepage": "https://github.com/Khamitamantaev/woman-up-test#readme"
+}

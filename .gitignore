@@ -1,0 +1,5 @@
+
+# jsDoc generate out
+/out
+/node_modules
+.env
