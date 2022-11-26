@@ -1,9 +1,18 @@
 const db = require("../models");
 const User = db.user;
 
+/**
+ * @module verifySignUp
+ * @description проверяем существование пользователя с идентичным username при регистрации
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
 checkDuplicate = (req, res, next) => {
 
-    // UserName check
+    /**
+     * @description Find user by username
+     * @param {String} username - проверяемый username  
+     */
     User.findOne({
         username: req.body.username
     }).exec((err, user) => {
@@ -17,7 +26,10 @@ checkDuplicate = (req, res, next) => {
             return;
         }
 
-        // Email check
+        /**
+     * @description Find user by email
+     * @param {String} email - проверяемый email  
+     */
         User.findOne({
             email: req.body.email
         }).exec((err, user) => {

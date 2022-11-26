@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 
+/**
+ * @description User model with one to many relationship with todo
+ */
 const User = mongoose.model(
   "User",
   new mongoose.Schema({

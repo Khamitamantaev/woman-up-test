@@ -10,6 +10,9 @@ module.exports = function(app) {
     next();
   });
 
+  /**
+   * @description SignUp route
+   */
   app.post(
     "/api/auth/signup",
     [
@@ -18,5 +21,8 @@ module.exports = function(app) {
     controller.signup
   );
 
+  /**
+   * @description SignIn route
+   */
   app.post("/api/auth/signin", controller.signin);
 };

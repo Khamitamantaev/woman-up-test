@@ -10,9 +10,20 @@ module.exports = function(app) {
     next();
   });
 
+  /**
+  * @description Test AllAccess public user get route
+  */
   app.get("/api/test/all", controller.allAccess);
+
+  /**
+  * @description Test PrivateAccess private user get route
+  */
   app.get("/api/test/user", [authJwt.verifyToken], controller.privateAccess);
 
+  /**
+  * @description Get info  user id
+  * @returns {JSON} with id
+  */
   app.get(
     "api/user/info",
     [authJwt.verifyToken],

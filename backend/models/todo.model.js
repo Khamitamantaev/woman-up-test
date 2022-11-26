@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+
+/**
+ * @description Todo model
+ */
 const Todo = mongoose.model(
     'Todo',
     new mongoose.Schema({

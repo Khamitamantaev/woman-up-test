@@ -2,6 +2,11 @@ const todoService = require("../services/todo.service");
 const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth.config");
 
+/**
+ * @description create todo controller
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
 exports.create = async (req, res) => {
     const token = req.headers.authorization.substring(7, req.headers.authorization.length);
     const decoded = jwt.verify(token, authConfig.access_secret);
@@ -12,6 +17,11 @@ exports.create = async (req, res) => {
     }).catch((error) => console.log(error));
 };
 
+/**
+ * @description create todo controller
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
 exports.findAll = async (req, res) => {
     const token = req.headers.authorization.substring(7, req.headers.authorization.length);
     const decoded = jwt.verify(token, authConfig.access_secret);
@@ -23,6 +33,11 @@ exports.findAll = async (req, res) => {
     }).catch((error) => console.log(error));
 };
 
+/**
+ * @description find one todo controller 
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
 exports.findOne = async (req, res) => {
     const token = req.headers.authorization.substring(7, req.headers.authorization.length);
     const decoded = jwt.verify(token, authConfig.access_secret);
@@ -32,6 +47,11 @@ exports.findOne = async (req, res) => {
     }).catch((error) => console.log(error));
 };
 
+/**
+ * @description update todo controller
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
 exports.update = async (req, res) => {
     const object = req.body
     return await todoService.updateById(req.params.id, object).then((todo) => {
@@ -39,6 +59,11 @@ exports.update = async (req, res) => {
     }).catch((error) => console.log(error));
 };
 
+/**
+ * @description delete todo controller
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
 exports.delete = async (req, res) => {
     const { id } = req.params;
     const token = req.headers.authorization.substring(7, req.headers.authorization.length);

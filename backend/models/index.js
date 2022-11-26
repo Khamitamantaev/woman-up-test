@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
+/**
+ * @description exported db object
+ */
 const db = {};
 
 db.mongoose = mongoose;
