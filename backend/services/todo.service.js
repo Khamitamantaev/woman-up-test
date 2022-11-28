@@ -21,10 +21,10 @@ class TodoService {
     const newTodo = { name, done: false };
     const todo = new this.model(newTodo);
     await User.findByIdAndUpdate(
-        userId,
-        { $push: { todos: todo._id } },
-        { new: true, useFindAndModify: false }
-      )
+      userId,
+      { $push: { todos: todo._id } },
+      { new: true, useFindAndModify: false }
+    )
 
     return todo.save();
   }
@@ -35,7 +35,7 @@ class TodoService {
    * @description - Получаем массив todo конкретного пользователя 
    */
   async findAll(id) {
-    const { todos } =  await User.findById(id).populate("todos");
+    const { todos } = await User.findById(id).populate("todos");
     return todos
   }
 
@@ -46,7 +46,7 @@ class TodoService {
    * @description Find todo by id
    */
   async findById(id, userId) {
-    const { todos } =  await User.findById(userId).populate("todos");
+    const { todos } = await User.findById(userId).populate("todos");
     return todos[todos.findIndex(todo => todo._id == id)]
   }
 
@@ -56,7 +56,7 @@ class TodoService {
    * @param {String} userId - id пользователя у которого удалится todo
    * @description delete todo by id 
    */
- async deleteById(id, userId) {
+  async deleteById(id, userId) {
     await User.updateOne({ _id: userId }, { $pull: { todos: id } })
     return this.model.findByIdAndDelete(id);
   }
@@ -69,7 +69,26 @@ class TodoService {
    */
   async updateById(id, object) {
     const query = { _id: id };
-    return this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done } }, { new: true});
+    return this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done } }, { new: true });
+  }
+
+
+  async findAllCount(condition, offset, limit, res) {
+    this.model.paginate(condition, { offset: offset, limit: limit })
+      .then((data) => {
+        res.send({
+          totalItems: data.totalDocs,
+          todos: data.docs,
+          totalPages: data.totalPages,
+          currentPage: data.page - 1,
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message:
+            err.message || "Some error.",
+        });
+      });
   }
 }
 

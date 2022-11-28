@@ -34,4 +34,9 @@ module.exports = function (app) {
   * @description Update todo route by id
   */
   app.put("/api/todo/:id", [authJwt.verifyToken], controller.update)
+
+  /**
+  * @description Find All todo with pagination
+  */
+   app.get("/api/todo/get/page", controller.findAllWithPagination)
 };

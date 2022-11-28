@@ -1,19 +1,20 @@
-const mongoose = require("mongoose");
-
-/**
- * @description Todo model
- */
-const Todo = mongoose.model(
-    'Todo',
-    new mongoose.Schema({
-        name: {
-            type: String,
+module.exports = (mongoose, mongoosePaginate) => {
+    /**
+     * Todo schema
+     */
+    const schema = mongoose.Schema(
+        {
+            name: String,
+            done: Boolean,
         },
-        done: {
-            type: Boolean,
-        }
-    }, { timestamps: true})
-);
+        { timestamps: true }
+    );
 
-
-module.exports = Todo;
+    schema.method("toJSON", function () {
+        const { __v, _id, ...object } = this.toObject();
+        object.id = _id;
+        return object;
+    });
+    schema.plugin(mongoosePaginate);
+    return mongoose.model("Todo", schema);
+};

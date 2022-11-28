@@ -69,9 +69,25 @@ exports.delete = async (req, res) => {
     const token = req.headers.authorization.substring(7, req.headers.authorization.length);
     const decoded = jwt.verify(token, authConfig.access_secret);
     let userId = decoded.id
-    await todoService.deleteById(id, userId).then((ok) => {
+    await todoService.deleteById(id, userId).then(() => {
         res.status(200).json({
             deleted: id
         });
     }).catch((error) => console.log(error));
+};
+
+exports.findAllWithPagination = async (req, res) => {
+    // console.log(res)
+    const { page, size, name } = req.query;
+    const getPagination = (page, size) => {
+        const limit = size ? +size : 3;
+        const offset = page ? page * limit : 0;
+        return { limit, offset };
+    };
+    let condition = name
+        ? { name: { $regex: new RegExp(name), $options: "i" } }
+        : {};
+
+    const { limit, offset } = getPagination(page, size);
+    await todoService.findAllCount(condition, offset, limit, res)
 };
