@@ -12,7 +12,7 @@ const bcrypt = require("bcryptjs");
 exports.signup = (req, res) => {
 
     /**
-     * We create user here with data from incoming request
+     * @description We create user here with data from incoming request
      */
     const user = new User({
         username: req.body.username,
@@ -21,7 +21,7 @@ exports.signup = (req, res) => {
     });
 
     /**
-     * We save user after create on Mongodb with check error
+     * @description We save user after create on Mongodb with check error
      */
     user.save((err, user) => {
         if (err) {

@@ -72,7 +72,13 @@ class TodoService {
     return this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done } }, { new: true });
   }
 
-
+/**
+ * 
+ * @param {*} condition - condition
+ * @param {*} offset - смещение 
+ * @param {*} limit - лимит получаемых данных
+ * @param {Object} res - Express response object
+ */
   async findAllCount(condition, offset, limit, res) {
     this.model.paginate(condition, { offset: offset, limit: limit })
       .then((data) => {

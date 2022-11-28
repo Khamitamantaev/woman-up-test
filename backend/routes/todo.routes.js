@@ -38,5 +38,5 @@ module.exports = function (app) {
   /**
   * @description Find All todo with pagination
   */
-   app.get("/api/todo/get/page", controller.findAllWithPagination)
+   app.get("/api/todo/get/page", [authJwt.verifyToken], controller.findAllWithPagination)
 };

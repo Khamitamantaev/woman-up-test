@@ -75,9 +75,16 @@ exports.delete = async (req, res) => {
         });
     }).catch((error) => console.log(error));
 };
-
+/**
+ * @description findAllWithPagination todo controller
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
 exports.findAllWithPagination = async (req, res) => {
-    // console.log(res)
+    
+    /**
+     * @description default values: limit = 3 and offset 0 
+     */
     const { page, size, name } = req.query;
     const getPagination = (page, size) => {
         const limit = size ? +size : 3;
